@@ -5,11 +5,11 @@ const {PubSub} = require('@google-cloud/pubsub');
 const pubSubClient = new PubSub();
 const project_id='ingka-b2b-englostkey-prod';
 const topic='ingka-b2b-englostkey-prod-ark-opening';
-const message = {
+const data = JSON.stringify({
   "email": "calle.nilsson1@ingka.ikea.com",
   "action": "CLOSE_YOUR_EYES",
-  "escape-combination": "AEKI"
-}
+  "escape-combination": "AEKI",
+})
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
@@ -26,7 +26,7 @@ const calc_idol_weight = (vol) => {
 };
 
 async function publishMessage() {
-  const dataBuffer = Buffer.from(message);
+  const dataBuffer = Buffer.from(data);
 
   try {
     const messageId = await pubSubClient
