@@ -11,7 +11,7 @@ const calc_whip_length = (width, height) => {
 
 const calc_idol_weight = (vol) => {
   const idol_density = 19.3;
-  return {"idol_weight": idol_density * vol};
+  return {"idol_weight": Math.round(idol_density * vol* 100) / 100 };
 };
 
 app.get('/', (req, res) => {
