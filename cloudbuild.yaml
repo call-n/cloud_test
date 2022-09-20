@@ -22,7 +22,7 @@ steps:
     args:
       - "run"
       - "deploy"
-      - "app-<YOUR_CODE_NAME>"
+      - "app-indiana-callenilsson1"
       - "--platform"
       - "managed"
       - "--image"
