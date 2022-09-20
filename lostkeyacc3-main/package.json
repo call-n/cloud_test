@@ -1,0 +1,19 @@
+{
+  "name": "indi",
+  "version": "1.0.0",
+  "description": "\"The Engineers of the Lost Key\" is a GCP tech challenge created *by engineers for engineers* to have fun and learn while practicing the ADRs on the [Engineering Baseline](https://github.com/ingka-group-digital/Engineering-Baseline):",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "call-n",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.20"
+  }
+}
