@@ -3,6 +3,7 @@ const app = express();
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
+const codename = 'callenilsson1';
 
 const calc_whip_length = (width, height) => {
     const c = Math.round(Math.sqrt(Math.pow(height, 2) + Math.pow(width/2, 2))* 100) / 100;
@@ -19,6 +20,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:codename/whip-jump', (req, res) => {
+  if (!req.params.codename === codename) {
+    res.send(301, 'Wrong codename')
+  }
   var width = req.query.width;
   var height = req.query.height;
 
@@ -26,10 +30,22 @@ app.get('/:codename/whip-jump', (req, res) => {
 });
 
 app.get('/:codename/switch-idol', (req, res) => {
+  if (!req.params.codename === codename) {
+    res.send(301, 'Wrong codename')
+  }
   var vol = req.query.vol;
 
   res.send(200, calc_idol_weight(vol));
 });
+
+app.get('/:codename/escape-logs', (req, res) => {
+  if (!req.params.codename === codename) {
+    res.send(301, 'Wrong codename')
+  }
+
+  res.send(200, {'escape-tip': 'code to escape'});
+});
+
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
