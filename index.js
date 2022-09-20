@@ -1,5 +1,10 @@
 const express = require('express');
 const app = express();
+const {PubSub} = require('@google-cloud/pubsub');
+
+const pubSubClient = new PubSub();
+const project_id='ingka-b2b-englostkey-prod';
+const topic='ingka-b2b-englostkey-prod-ark-opening';
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
@@ -14,6 +19,25 @@ const calc_idol_weight = (vol) => {
   const idol_density = 19.3;
   return {"idol_weight": Math.round(idol_density * vol* 100) / 100 };
 };
+
+async function publishMessage() {
+  const dataBuffer = Buffer.from(message);
+  const message = {
+    "email": "calle.nilsson1@ingka.ikea.com",
+    "action": "CLOSE_YOUR_EYES",
+    "escape-combination": "AEKI"
+  }
+
+  try {
+    const messageId = await pubSubClient
+      .topic(`projects/${project_id}/topics/${topic}`)
+      .publishMessage({data: dataBuffer});
+    console.log(`Message ${messageId} published.`);
+  } catch (error) {
+    console.error(`Received error while publishing: ${error.message}`);
+    process.exitCode = 1;
+  }
+}
 
 app.get('/', (req, res) => {
   res.send('hello world')
@@ -45,6 +69,19 @@ app.get('/:codename/escape-logs', (req, res) => {
 
   res.send(200, {'escape-tip': 'code to escape'});
 });
+
+app.get('/:codename/ark-opened', (req, res) => {
+  if (!req.params.codename === codename) {
+    res.send(301, 'Wrong codename')
+  }
+
+  publishMessage();
+
+  res.send(200, 'sent');
+});
+
+
+
 
 
 app.listen(PORT, HOST);
